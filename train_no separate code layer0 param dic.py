@@ -56,7 +56,7 @@ def run_training(params, save_model = False):
         nfeatures = xtrain.shape[1],
         ntargets = ytrain.shape[1], 
         num_layers = params['num_layers'], 
-        hidden_size = params['hidden_size'], 
+        hidden_sizes = params['hidden_sizes'], 
         dropout = params['dropout']
     )
     
@@ -97,7 +97,7 @@ def run_training(params, save_model = False):
 def objective(trial):
     params = {
         'num_layers' : trial.suugest_int('num_layers', 1, 7),
-        'hidden_size' :tuple([trial.suggest_int('n_units_l{}'.format(i), 16, 2048) for i in range(params['num_layers'])]),
+        'hidden_sizes' :tuple([trial.suggest_int('n_units_l{}'.format(i), 16, 2048) for i in range(params['num_layers'])]),
         'dropout' : tuple([trial.suggest_uniform('dropout_l{}'.format(i), 0.1, 0.7) for i in range(params['num_layers'])]),
         'learning_rate' : trial.suggest_loguniform('learning_rate', 1e-6, 1e-3)
     }
